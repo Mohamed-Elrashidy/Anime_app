@@ -1,13 +1,15 @@
-import 'package:app/core/theme/app_text_styles.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../home/presentation/ui/pages/home_page.dart';
 
 class NavigationPage extends StatefulWidget {
-  NavigationPage({super.key});
+  const NavigationPage({super.key});
 
   @override
   State<NavigationPage> createState() => _NavigationPageState();
@@ -15,81 +17,88 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   late PersistentTabController _controller;
+  Timer? _subscriptionTimer;
+  bool _hasShownSubscriptionDialog = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = PersistentTabController(initialIndex: 0);
+    _startSubscriptionTimer();
+  }
+
+  void _startSubscriptionTimer() {
+    _subscriptionTimer = Timer(const Duration(seconds: 10), () {
+      if (mounted && !_hasShownSubscriptionDialog) {
+        _showSubscriptionPage();
+      }
+    });
+  }
+
+  void _showSubscriptionPage() {
+    if (!_hasShownSubscriptionDialog) {
+      _hasShownSubscriptionDialog = true;
+      Navigator.of(context).pushNamed(Routes.subscription);
+    }
+  }
+
+  @override
+  void dispose() {
+    _subscriptionTimer?.cancel();
+    super.dispose();
   }
 
   List<Widget> _buildScreens() {
-    return [HomePage(), Container(), Container(), Container(), Container()];
+    return const [HomePage(), Scaffold(), Scaffold(), Scaffold(), Scaffold()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
+      // Home Tab
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home, color: AppColors.textOnPrimary),
-        inactiveIcon: Icon(Icons.home, color: AppColors.textPrimary),
-        title: ("Home"),
-        activeColorSecondary: AppColors.textOnPrimary,
-        inactiveColorSecondary: AppColors.error,
-        textStyle: AppTextStyles.font14W600TextOnPrimary,
+        icon: Icon(Icons.home, color: Colors.white),
+        inactiveIcon: Icon(Icons.home, color: AppColors.textSecondary),
+
         activeColorPrimary: AppColors.primary,
-        inactiveColorPrimary: AppColors.background,
+        title: 'Home',
+        activeColorSecondary: Colors.white,
+        inactiveColorPrimary: AppColors.textSecondary,
       ),
+      // Library Tab
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.settings, color: AppColors.textOnPrimary),
-        inactiveIcon: Icon(
-          CupertinoIcons.settings,
-          color: AppColors.textPrimary,
-        ),
-        title: ("Settings"),
-        activeColorSecondary: AppColors.textOnPrimary,
-        inactiveColorSecondary: AppColors.textPrimary,
-        textStyle: AppTextStyles.font14W600TextOnPrimary,
+        icon: Icon(Icons.shelves, color: Colors.white),
+        inactiveIcon: Icon(Icons.shelves, color: AppColors.textSecondary),
+        title: 'Library',
         activeColorPrimary: AppColors.primary,
-        inactiveColorPrimary: AppColors.background,
+        activeColorSecondary: Colors.white,
+        inactiveColorPrimary: AppColors.textSecondary,
       ),
+      // Search Tab
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.settings, color: AppColors.textOnPrimary),
-        inactiveIcon: Icon(
-          CupertinoIcons.settings,
-          color: AppColors.textPrimary,
-        ),
-        title: ("Settings"),
-        activeColorSecondary: AppColors.textOnPrimary,
-        inactiveColorSecondary: AppColors.textPrimary,
-        textStyle: AppTextStyles.font14W600TextOnPrimary,
+        icon: Icon(Icons.search, color: Colors.white),
+        inactiveIcon: Icon(Icons.search, color: AppColors.textSecondary),
+        title: 'Search',
         activeColorPrimary: AppColors.primary,
-        inactiveColorPrimary: AppColors.background,
+        activeColorSecondary: Colors.white,
+        inactiveColorPrimary: AppColors.textSecondary,
       ),
+      // Explore Tab
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.settings, color: AppColors.textOnPrimary),
-        inactiveIcon: Icon(
-          CupertinoIcons.settings,
-          color: AppColors.textPrimary,
-        ),
-        title: ("Settings"),
-        activeColorSecondary: AppColors.textOnPrimary,
-        inactiveColorSecondary: AppColors.textPrimary,
-        textStyle: AppTextStyles.font14W600TextOnPrimary,
+        icon: Icon(Icons.explore, color: Colors.white),
+        inactiveIcon: Icon(Icons.explore, color: AppColors.textSecondary),
+        title: 'Explore',
         activeColorPrimary: AppColors.primary,
-        inactiveColorPrimary: AppColors.background,
+        activeColorSecondary: Colors.white,
+        inactiveColorPrimary: AppColors.textSecondary,
       ),
+
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.settings, color: AppColors.textOnPrimary),
-        inactiveIcon: Icon(
-          CupertinoIcons.settings,
-          color: AppColors.textPrimary,
-        ),
-        title: ("Settings"),
-        activeColorSecondary: AppColors.textOnPrimary,
-        inactiveColorSecondary: AppColors.textPrimary,
-        textStyle: AppTextStyles.font14W600TextOnPrimary,
+        icon: Icon(Icons.settings, color: Colors.white),
+        inactiveIcon: Icon(Icons.settings, color: AppColors.textSecondary),
+        title: 'Settings',
         activeColorPrimary: AppColors.primary,
-        inactiveColorPrimary: AppColors.background,
+        activeColorSecondary: Colors.white,
+        inactiveColorPrimary: AppColors.textSecondary,
       ),
     ];
   }
@@ -101,32 +110,41 @@ class _NavigationPageState extends State<NavigationPage> {
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
-      handleAndroidBackButtonPress: true, // Default is true.
-
-      resizeToAvoidBottomInset:
-          true, // This needs to be true if you want to move up the screen on a non-scrollable screen when keyboard appears. Default is true.
-      stateManagement: true, // Default is true.
+      handleAndroidBackButtonPress: true,
+      resizeToAvoidBottomInset: true,
+      stateManagement: true,
       hideNavigationBarWhenKeyboardAppears: true,
-      padding: const EdgeInsets.only(top: 8),
+      padding: EdgeInsets.only(top: 8.h),
       backgroundColor: AppColors.background,
       isVisible: true,
       animationSettings: const NavBarAnimationSettings(
         navBarItemAnimation: ItemAnimationSettings(
-          // Navigation Bar's items animation properties.
           duration: Duration(milliseconds: 400),
           curve: Curves.ease,
         ),
         screenTransitionAnimation: ScreenTransitionAnimationSettings(
-          // Screen transition animation on change of selected tab.
           animateTabTransition: true,
           duration: Duration(milliseconds: 200),
           screenTransitionAnimationType: ScreenTransitionAnimationType.fadeIn,
         ),
       ),
       confineToSafeArea: true,
-      navBarHeight: kBottomNavigationBarHeight,
-      navBarStyle:
-          NavBarStyle.style7, // Choose the nav bar style with this property
+      navBarHeight: 70.h,
+      navBarStyle: NavBarStyle.style7,
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          topRight: Radius.circular(16.r),
+        ),
+        colorBehindNavBar: AppColors.background,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.textSecondary.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
     );
   }
 }

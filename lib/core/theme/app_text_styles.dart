@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_colors.dart';
 
@@ -6,30 +7,30 @@ class AppTextStyles {
   AppTextStyles._();
 
   // Display Text Styles
-  static const TextStyle font32W700TextPrimary = TextStyle(
-    fontSize: 32,
+  static TextStyle font32W700TextPrimary = TextStyle(
+    fontSize: 32.sp,
     fontWeight: FontWeight.bold,
     height: 1.2,
     color: AppColors.textPrimary,
   );
 
-  static const TextStyle font28W700TextPrimary = TextStyle(
-    fontSize: 28,
+  static TextStyle font28W700TextPrimary = TextStyle(
+    fontSize: 28.sp,
     fontWeight: FontWeight.bold,
     height: 1.3,
     color: AppColors.textPrimary,
   );
 
-  static const TextStyle font24W600TextPrimary = TextStyle(
-    fontSize: 24,
+  static TextStyle font24W600TextPrimary = TextStyle(
+    fontSize: 24.sp,
     fontWeight: FontWeight.w600,
     height: 1.3,
     color: AppColors.textPrimary,
   );
 
   // Headline Text Styles
-  static const TextStyle font22W600TextPrimary = TextStyle(
-    fontSize: 22,
+  static TextStyle font22W600TextPrimary = TextStyle(
+    fontSize: 22.sp,
     fontWeight: FontWeight.w600,
     height: 1.4,
     color: AppColors.textPrimary,
@@ -50,22 +51,22 @@ class AppTextStyles {
   );
 
   // Title Text Styles
-  static const TextStyle font16W600TextPrimary = TextStyle(
-    fontSize: 16,
+  static TextStyle font16W600TextPrimary = TextStyle(
+    fontSize: 16.sp,
     fontWeight: FontWeight.w600,
     height: 1.5,
     color: AppColors.textPrimary,
   );
 
-  static const TextStyle font14W600TextPrimary = TextStyle(
-    fontSize: 14,
+  static TextStyle font14W600TextPrimary = TextStyle(
+    fontSize: 14.sp,
     fontWeight: FontWeight.w600,
     height: 1.5,
     color: AppColors.textPrimary,
   );
 
-  static const TextStyle font12W600TextPrimary = TextStyle(
-    fontSize: 12,
+  static TextStyle font12W600TextPrimary = TextStyle(
+    fontSize: 12.sp,
     fontWeight: FontWeight.w600,
     height: 1.5,
     color: AppColors.textPrimary,
@@ -216,5 +217,14 @@ class AppTextStyles {
 
   static var font14W700TextPrimary = font14W600TextPrimary.copyWith(
     fontWeight: FontWeight.bold,
+  );
+
+  static var font14W600TextSecondary = font14W600TextPrimary.copyWith(
+    color: AppColors.textSecondary,
+    fontWeight: FontWeight.w600,
+  );
+
+  static var font22W700TextPrimary = font22W600TextPrimary.copyWith(
+    fontWeight: FontWeight.w700,
   );
 }
