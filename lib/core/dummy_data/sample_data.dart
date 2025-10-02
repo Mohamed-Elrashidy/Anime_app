@@ -1,5 +1,5 @@
-import '../../features/anime/domain/entity/anime_entity.dart';
 import '../../features/anime/domain/entity/character_entity.dart';
+import '../../features/charchters/domain/entity/anime_entity.dart';
 import '../enums/anime_genre.dart';
 import '../enums/anime_status.dart';
 import '../enums/character_role.dart';

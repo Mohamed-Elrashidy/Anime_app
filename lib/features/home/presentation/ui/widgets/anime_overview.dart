@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/data/sample_data.dart';
+import '../../../../../core/dummy_data/sample_data.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_text_styles.dart';
-import '../../../../anime/domain/entity/anime_entity.dart';
 import '../../../../anime/domain/entity/character_entity.dart';
+import '../../../../charchters/domain/entity/anime_entity.dart';
 
 class AnimeOverview extends StatelessWidget {
   const AnimeOverview({super.key});

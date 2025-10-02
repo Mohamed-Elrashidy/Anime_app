@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/theme/app_colors.dart';
-import '../../../domain/entity/anime_entity.dart';
+import '../../../../charchters/domain/entity/anime_entity.dart';
 
 class AnimeDetailsPage extends StatelessWidget {
   final AnimeEntity anime;
